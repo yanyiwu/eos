@@ -12,7 +12,7 @@ if [[ "$(uname)" == 'Linux' ]]; then
 fi
 cd $GIT_ROOT/build
 # count tests
-echo "+++ $([[ "$BUILDKITE" == 'true' ]] && echo ':microscope: ')Running Parallelizable Tests"
+echo "+++ $([[ "$BUILDKITE" == 'true' ]] && echo ':microscope: ')Running Parallelizable WASM Spec Tests"
 TEST_COUNT=$(ctest -N -LE _tests | grep -i 'Total Tests: ' | cut -d ':' -f 2 | awk '{print $1}')
 if [[ $TEST_COUNT > 0 ]]; then
     echo "$TEST_COUNT tests found."
@@ -22,7 +22,7 @@ else
 fi
 # run tests
 set +e # defer ctest error handling to end
-echo "$ ctest -j $CPUS -E wasm_spec_ -LE _tests --output-on-failure -T Test"
+echo "$ ctest -j $CPUS -R wasm_spec_ --output-on-failure -T Test"
 ctest -j $CPUS -LE _tests --output-on-failure -T Test
 EXIT_STATUS=$?
 echo 'Done running parallelizable tests.'
