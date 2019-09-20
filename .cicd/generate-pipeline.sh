@@ -214,6 +214,8 @@ EOF
 
 EOF
         fi
+    echo
+    done
     echo '    # parallel wasm tests'
     echo $PLATFORMS_JSON_ARRAY | jq -cr '.[]' | while read -r PLATFORM_JSON; do
         if [[ ! "$(echo "$PLATFORM_JSON" | jq -r .FILE_NAME)" =~ 'macos' ]]; then
